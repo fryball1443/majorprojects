@@ -1,0 +1,37 @@
+{
+  "university_events": [
+    {
+      "Name": "Lecture on AI",
+      "UID": 0,
+      "Date": "2023-10-15",
+      "StartTime": "14:00",
+      "Location": "Bruner 228",
+      "Duration": 2
+    },
+    {
+      "Name": "Career Fair",
+      "UID": 1,
+      "Date": "2023-11-05",
+      "StartTime": "10:00",
+      "Location": "The Hoop",
+      "Duration": 6
+    },
+    {
+      "Name": "Music Concert",
+      "UID": 2,
+      "Date": "2023-12-08",
+      "StartTime": "19:30",
+      "Location": "University Auditorium",
+      "Duration": 2
+    },
+    {
+      "Name": "Sports Day",
+      "UID": 3,
+      "Date": "2023-09-22",
+      "StartTime": "08:00",
+      "Location": "University Sports Complex",
+      "Duration": 8
+    }
+  ]
+}
+

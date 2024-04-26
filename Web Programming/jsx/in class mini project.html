@@ -1,0 +1,238 @@
+<!-- email,password backend -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="d-flex align-items-center justify-content-center">
+        <!--Login Form-->
+        <div id="divLogin" class="card col-10 col-md-8 col-lg-6 mt-3">
+            <div class="card-header">
+                <h2 class="text-center">Login</h2>
+            </div>
+
+
+            <div class="card-body">
+                <form>
+                    <div class="form-floating mb-3" > <!--username/email-->
+                        <input id="txtLoginUsername" type="text" class="form-control" placeholder="Username or Email" onfocusout="check(document.getElementById('txtLoginUsername'), document.getElementById('errLoginUsername') )" required minlength="1" maxlength="99">
+                        <label for="txtLoginUsername" class="form-label text-black">Username or Email</label>
+                    <div id="errLoginUsername" class="emsg"></div>
+                    </div>
+                    <div class="form-floating mb-3" required minlength="1"> <!--password-->
+                        <input id="txtLoginPassword" type="password" class="form-control" placeholder="Password"  onfocusout="check(document.getElementById('txtLoginPassword'), document.getElementById('errLoginPassword') )" required minlength="1" maxlength="99">
+                        <label for="txtLoginPassword" class="form-label text-black" aria-label="Password">Password</label>
+                    <div id="errLoginPassword" class="emsg"></div>
+                    </div>
+
+
+                    <button id="btnLogin" type="button" class="btn btn-primary col-12 mt-4">Login</button>
+
+
+                    <div class="text-center mt-4">
+                        <a href="#" onclick="return false;" id="btnToggle">Don't have an account? Register here!</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+               <!--Registration Form-->
+               <div id="divRegister" class="card col-10 col-md-8 col-lg-6 mt-3" style="display: none;">
+                <div class="card-header">
+                    <h2 class="text-center">Register</h2>
+                </div>
+   
+                <div class="card-body">
+                    <form>
+                        <h3 class="mb-3">Personal information</h3>
+                        <div class="form-floating mb-3" > <!--username-->
+                            <input id="txtRegisterUsername" class="form-control" placeholder="Username" onfocusout="check(document.getElementById('txtRegisterUsername'), document.getElementById('errRegisterUsername') )" required minlength="1" maxlength="99">
+                            <label for="txtRegisterUsername" class="form-label text-black" aria-label="Username">Username</label>
+                        <div id="errRegisterUsername" class="emsg"></div>
+                        </div>
+                        <div class="form-floating mb-3" required minlength="1"> <!--password-->
+                            <input id="txtRegisterPassword" type="password" class="form-control" placeholder="Password" onfocusout="check(document.getElementById('txtRegisterPassword'), document.getElementById('errRegisterPassword') )" required minlength="1">
+                            <label for="txtRegisterPassword" class="form-label text-black" aria-label="Password">Password</label>
+                        <div id="errRegisterPassword" class="emsg"></div>
+                        </div>
+                        <div class="row gx-3">
+                            <div class="col">  
+                                <div class="form-floating mb-3" required minlength="1">
+                                    <input id="txtRegisterFirstName" class="form-control" placeholder="First Name" onfocusout="check(document.getElementById('txtRegisterFirstName'), document.getElementById('errRegisterFirstName') )" required minlength="1">
+                                    <label for="txtRegisterFirstName" class="form-label text-black" aria-label="First Name">First name</label>
+                                    <div id="errRegisterFirstName" class="emsg"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3" required minlength="1">
+                                    <input id="txtRegisterLastName" class="form-control" placeholder="Last Name" onfocusout="check(document.getElementById('txtRegisterLastName'), document.getElementById('errRegisterLastNAme') )" required minlength="1">
+                                    <label for="txtRegisterLastName" class="form-label text-black" aria-label="Last Name">Last name</label>
+                                    <div id="errRegisterLastName" class="emsg"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3" required minlength="1">    
+                            <input id="txtRegisterEmail" class="form-control" placeholder="Email"  required>
+                            <label for="txtRegisterEmail" class="form-label text-black" aria-label="Email">Email</label>
+                            <div id="errRegisterEmail" class="emsg"></div>
+                        </div>
+                       
+                    <button id="btnRegister" type="button" class="btn btn-primary col-12 mt-4">Register</button>
+                    <button type="button" id="btnClear" class="btn btn-danger col-12 mt-4">Return</button>
+                   
+                    <div class="text-center mt-4">
+                        <a href="#" onclick="return false;" id="btnReturn"> Return to Login </a>
+                    </div>
+
+
+                    </form>
+
+
+                    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+                </div>
+
+
+                <script>
+           
+                    $('#btnAbout').on('click',function(){
+                        //Slide Login or Register card before sliding About card down
+                        $('#divLogin').slideUp(function(){
+                            $('#divRegister').slideUp(function(){
+                                $('#divAbout').slideDown();
+                            });
+                        });
+                    })
+           
+                    $('#btnReturnLogin').on('click',function(){
+                        $('#divAbout').slideUp(function(){
+                            $('#divLogin').slideDown();
+                        });
+                    })
+           
+                    $('#btnLogin').on('click',function(){
+                        let strUsername = $('#txtLoginUsername').val();
+                        let strPassword = $('#txtLoginPassword').val();
+           
+                        if(strUsername.length < 1 || strPassword.length < 1){
+                            Swal.fire({
+                                title: "Oops!",
+                                html: '<p>Email and Password cannot be blank</p>',
+                                icon: "error"
+                            })
+                        } else {
+           
+                            $.post('https://simplecoop.swollenhippo.com/sessions.php', {Email: strUsername, Password: strPassword}, function(result){
+                                result = JSON.parse(result);
+                                console.log(result);
+           
+                                if(result.Outcome != 'false') {
+                                    sessionStorage.setItem('SessionID',result.SessionID);
+           
+                                    $('#divNavbar').slideUp();
+                                    $('#divLogin').slideUp(function(){
+                                        $('#divDashboard').slideDown();
+                                    });
+           
+                                } else {
+                                    Swal.fire({
+                                        title: "Oops!",
+                                        html: '<p>Invalid username and/or password</p>',
+                                        icon: "error"
+                                    })
+                                }
+           
+                               
+                            })
+                           
+                        }
+                    })
+           
+                    $('#btnRegister').on('click',function(){
+                        //define string variables to hold user input on the registration card
+                        let strUsername = $('#txtRegisterUsername').val();
+                        let strPassword = $('#txtRegisterPassword').val();
+                        let strFirstName = $('#txtRegisterFirstName').val();
+                        let strLastName = $('#txtRegisterLastName').val();
+                        let strEmail = $('#txtRegisterEmail').val();
+                        let strID = $('#txtRegisterID').val();
+           
+                        let blnError = false; //This is set to true if the user entered something incorrect
+                        let strErrorMsg = ""; //Error messages are concatenated to this string
+                    })
+
+
+
+
+        $('#btnToggle').on('click',function(){
+            $('#divLogin').slideUp(function(){
+                $('#divRegister').slideDown();
+            })
+        })
+
+
+        $('#btnReturn').on('click',function(){
+            $('#divRegister').slideUp(function(){
+                $('#divLogin').slideDown();
+          })
+        })
+
+
+        $('#btnClear').on('click',function(){
+            $('#txtRegisterUsername').val( '')
+            $('#txtRegisterPassword').val( '')
+            $('#txtRegisterFirstName').val( '')
+            $('#txtRegisterLastName').val( '')
+            $('#txtRegisterEmail').val( '')
+            $('#numRegisterPhone').val( '')
+            $('#txtRegisterCoopID').val( '')
+            $('#txtRegisterStreetAddress1').val( '')
+            $('#txtRegisterStreetAddress2').val( '')
+            $('#txtRegisterCity').val( '')
+            $('#txtRegisterState').val( '')
+            $('#txtRegisterZip').val( '')
+
+
+        })
+
+
+        function check(a,b){
+          // init
+          var valid = true;
+
+
+          let field = a;
+          let error = b;
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add("err");
+            error.innerHTML = " Please Enter a valid input\r\n ";
+          } else {
+            field.classList.remove("err");
+            error.innerHTML = "";
+          }
+       
+          return valid;
+        }
+        </script>
+</body>
+</html>
+
+
+
+
+
+
+</body>
+

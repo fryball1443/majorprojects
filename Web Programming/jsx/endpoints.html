@@ -1,0 +1,184 @@
+<script>
+/*
+    File to store in-progress JavaScript code so that things don't get
+    messy in the HTML file.
+*/
+
+/*
+    So far there is no instance of error handling throughout endpoints.html, adding error handling to each block can 
+    help us pinpoint where the issues lie when they arise. - Mitchell
+*/
+
+//coop.php endpoint
+$.post('https://simplecoop.swollenhippo.com/coop.php', function(result) {
+    result = JSON.parse(result);
+    strCoopID = result.CoopID;
+    console.log(strCoopID);
+    $('#txtRegistrationID').val(strCoopID)
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/coop.php',
+    type: 'PUT',
+    data: {SessionID:sessionStorage.getItem('SessionID'),Street1:sessionStorage.getItem('Street1'),Street2:sessionStorage.getItem('Street2'),City:sessionStorage.getItem('City'),State:sessionStorage.getItem('State'),ZIP:sessionStorage.getItem('ZIP')}, //Is this right?
+    success: function(result) {
+        console.log(result.Outcome);
+    }
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/coop.php',
+    type: 'DELETE',
+    data: {SessionID:sessionStorage.getItem('SessionID')}, //Is this right? --- These all look correct on a fundamental level,
+    success: function(result) {                                               //biggest issue is potential error message handling as mentioned earlier -Mitchell
+        console.log(result.Outcome);
+    }
+})
+$.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(result) {
+    result.forEach(function(strCoopDetail) {
+        console.log(strCoopDetail);
+    })
+})
+
+//users.php endpoint
+$.post('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strCoopID}, function(result) { 
+    //strCoopID will need to be defined
+    console.log(result.Outcome);
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/users.php',
+    type: 'PUT',
+    data: {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strCoopID}, //Is this right?
+    success: function(result) {
+        console.log(result.Outcome);
+    }
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/users.php',
+    type: 'DELETE',
+    data: {Email:sessionStorage.getItem('Email')}, //Is this right?
+    success: function(result) {
+        console.log(result.Outcome);
+    }
+})
+$.getJSON('https://simplecoop.swollenhippo.com/users.php', {Email:sessionStorage.getItem('Email')}, function(result) {
+    result.forEach(function(strCoopDetail) {
+        console.log(strCoopDetail);
+    })
+})
+
+//sessions.php endpoint
+$.post('https://simplecoop.swollenhippo.com/sessions.php', {Email:strEmail,Password:strPassword}, function(result){
+    //The names of the JSON values passed may need to be changed
+    //Also may need to add result = JSON.parse(result) on this one and the ones below (besides $.getJSON())
+    console.log(result.Outcome);
+    sessionStorage.setItem('SessionID', result.SessionID);
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/sessions.php',
+    type: 'PUT',
+    data: {SessionID:sessionStorage.getItem('SessionID')}, //Is this right?
+    success: function(result){
+        console.log(result.Outcome);
+    }
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/sessions.php',
+    type: 'PUT',
+    data: {SessionID:sessionStorage.getItem('SessionID')}, //Is this right?
+    success: function(result) {
+        console.log(result.Outcome);
+    }
+})
+$.getJSON('https://simplecoop.swollenhippo.com/sessions.php', {SessionID:sessionStorage.getItem('SessionID')}, function(result){
+    console.log(result);
+})
+
+//eggs.php
+$.post('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'),observationDateTime:getRandomObservationDatetime(),eggs:'eggValue'}, function(result) { //Don't know egg value??
+    console.log('Post request successful');
+    console.log(result.Outcome);
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/eggs.php',
+    type: 'PUT',
+    data: {SessionID:sessionStorage.getItem('SessionID'),logID:logIDValue}, //Replace logIDValue with the actual log ID
+    success: function(result) {
+        console.log('PUT request successful');
+        console.log(result.Outcome);
+    }
+})
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/eggs.php',
+    type: 'DELETE',
+    data: {SessionID:'strCoopID'}, 
+    success: function(result) {
+        console.log('DELETE request successful');
+        console.log(result.Outcome);
+    }
+})
+$.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'),days:currentDate}, function(result) { //Not sure day value
+    console.log('GET request successful');
+    console.log('Response:', result);
+    result.forEach(function(eggRecord) {
+        //Not sure how we will store eggRecord
+        console.log('Egg Record:', eggRecord);
+    })
+})
+//enviroment.php
+$.post('https://simplecoop.swollenhippo.com/environment.php', {SessionID: sessionStorage.getItem('SessionID'),observationDateTime: getRandomObservationDatetime(),temperature: getRandomTemperature(),humidity: getRandomHumidity()},
+function(result) {
+    console.log('POST request successful');
+    console.log('Outcome:', result.Outcome);
+});
+$.ajax({
+    url: 'https://simplecoop.swollenhippo.com/environment.php',
+    type: 'DELETE',
+    data: {SessionID: sessionStorage.getItem('SessionID'), logID: logIDValue}, //Replace logIDValue with the actual log ID of the observation you want to delete
+    success: function(result) {
+        console.log('DELETE request successful');
+        console.log('Outcome:', result.Outcome);
+    }
+});
+$.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID: sessionStorage.getItem('SessionID'), days:currentDate}, //Not sure if currentDate is correct
+    function(result) {
+    console.log('GET request successful');
+    console.log('Response:', result);
+    result.forEach(function(environmentRecord) {
+        console.log('Environment Record:', environmentRecord);
+    });
+});
+//Generate random enviroment
+function getRandomObservationDatetime() {
+  // Get the current date
+   var currentDate = new Date();
+  // Generate a random number of days between 0 and 100
+   var randomDays = Math.floor(Math.random() * 101);
+  // Calculate the random date within the specified range
+   var randomDate = new Date(currentDate);
+   randomDate.setDate(currentDate.getDate() - randomDays);
+  // Format the date in ISO string format
+   var observationDatetime = randomDate.toISOString();
+   return observationDatetime;
+}
+function getRandomTemperature() {
+  // Generate a random temperature between 42 and 90
+   return Math.random() * (90 - 42) + 42;
+}
+function getRandomHumidity() {
+  // Generate a random humidity between 30 and 98
+   return Math.random() * (98 - 30) + 30;
+}
+// Loop to execute the code block 100 times
+for (var i = 0; i < 100; i++) {
+  // The SessionID and additional data with random temperature, humidity, and observationdatetime
+   var requestData = {
+     SessionID:sessionStorage.getItem('SessionID'),
+     temperature: getRandomTemperature(),
+     observationDateTime: getRandomObservationDatetime(),
+     humidity: getRandomHumidity()
+   };
+  // Making the AJAX request using POST
+   $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+      console.log(result);
+   });
+}
+</script>

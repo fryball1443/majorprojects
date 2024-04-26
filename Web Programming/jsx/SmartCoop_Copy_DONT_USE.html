@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Coop</title>
+    <!--Content delivery network for Bootstrap stylesheet.-->
+    <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+</head>
+<!--This Section of code formats the body of the file.-->
+<body class="bg-dark">
+
+    <!--<div class="vh-100 d-flex justify-content-center align-items-center">
+    <img src="https://plus.unsplash.com/premium_photo-1664527009217-7ab29b61bd3f?w=200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNoaWNrZW4lMjBjb29wfGVufDB8fDB8fHww" alt="plus.unsplash.com" style="width:100px;height:100px">
+    </div>
+    -->
+    <!-- The navigation bar -->
+        <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
+                                                                                                 <!--Edited by Nolen-->
+            <div class="container-fluid">
+                <!-- The brand logo -->
+                <a class="navbar-brand" href="#">Smart Coop</a>
+                <!-- The toggle button for collapsing the navigation links -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <!-- The home link -->
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Home
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        <!-- The account dropdown. I tried to make it so it is aligned to the right, but it kept breaking. -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
+                            <!-- The dropdown menu for account options. Currently both buttons do the same thing as each other, because it uses our existing login/signup button code. -->
+                            <div class="dropdown-menu">
+                                <!-- The login option -->
+                                <!--The data-card attribute needs to be Register for this link so that 
+                                    it will only work if the Registration card is showing.-->
+                                <a class="dropdown-item" data-card="Register" id="navLogin" href="#">Login</a>
+                                <!-- The sign up option -->
+                                <!--The data-card attribute needs to be Login for this link so that 
+                                    it will only work if the Login card is showing.-->
+                                <a class="dropdown-item" data-card="Login" id="navRegister" href="#">Register</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+      
+    <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain"> 
+        <div class="card col-12 col-md-5 col-lg-4" id="divLogin">  
+            <!--This section of code sets up the formating for the card header.-->
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h3>Smart Coop Login</h3>
+            </div>
+            <!--This div tag contains the body of the login form.-->
+            <div class="card-body">
+                <form>
+                    <!--This div tag creates the text box for the email.-->
+                    <div class="form-group">
+                        <label for="txtLoginEmail" class="form-label">Email</label>
+                        <input id="txtLoginEmail" placeholder="Email" aria-label="Email" class="form-control">
+                    </div>
+                    <!--This div tag creates the text box for the password.-->
+                    <div class="form-group">
+                        <label for="txtLoginPassword" class="form-label">Password</label>
+                        <input id="txtLoginPassword" placeholder="Password" aria-label="Password" class="form-control" type="password">
+                    </div>
+                    <!--This line of code creates the button for the user to login-->
+                    <button class="col-12 btn btn-success mt-4" id="btnLogin" type="button">Login</button>
+                    <!--This div tag creates the button for the user to toggle between the login form and registration form.-->
+                    <div class="col-12 d-flex justify-content-center">
+                        <a class="col-12 text-center btnToggle" data-card="Login">Need an Account?  Click Here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--Card for the registration page.-->
+        <div class="card col-12 col-md-5 col-lg-4" id="divRegister" style="display:none;">
+            <!--Card header-->
+            <div class="card-header d-flex justify-content-center">
+                <h3>Smart Coop Registration</h3>
+            </div>
+            <!--Card body-->
+            <div class="card-body">
+                <form>
+                    <!--Form section for entering email.-->
+                    <div class="form-group">
+                        <label for="txtEmail" class="form-label">Email</label>
+                        <input id="txtEmail"  placeholder="Email" aria-label="Email" class="form-control" type="email">
+                    </div>
+                    <!--Form section for entering password.-->
+                    <div class="form-group">
+                        <label for="txtPassword" class="form-label">Password</label>
+                        <input id="txtPassword"  placeholder="Password" aria-label="Password" class="form-control" type="password">
+                    </div>
+                    <!--Form section for entering first name.-->
+                    <div class="form-group">
+                        <label for="txtFirstName" class="form-label">First Name</label>
+                        <input id="txtFirstName"  placeholder="First Name" aria-label="First Name" class="form-control">
+                    </div>
+                    <!--Form section for entering last name.-->
+                    <div class="form-group">
+                        <label for="txtLastName" class="form-label">Last Name</label>
+                        <input id="txtLastName"  placeholder="Last Name" aria-label="Last Name" class="form-control">
+                    </div>
+                    <!--Form section for entering street address (first line).-->
+                    <div class="form-group">
+                        <label for="txtStreetAddress1" class="form-label">Street Address Line 1</label>
+                        <input id="txtStreetAddress1" placeholder="Street Address 1" aria-label="Street Address 1"  class="form-control">
+                    </div>
+                    <!--Form section for entering the street address (second line).-->
+                    <div class="form-group">
+                        <label for="txtStreetAddress2" class="form-label">Street Address Line 2</label>
+                        <input id="txtStreetAddress2"  placeholder="Street Address 2" aria-label="Street Address 2" class="form-control">
+                    </div>
+                    <!--Form section for entering city.-->
+                    <div class="form-group">
+                        <label for="txtCity" class="form-label">City</label>
+                        <input id="txtCity"  placeholder="City" aria-label="City" class="form-control">
+                    </div>
+                    <!--Form section for entering state.-->
+                    <div class="form-group">
+                        <label for="txtState" class="form-label">State</label>
+                        <input id="txtState"  placeholder="State" aria-label="State" class="form-control">
+                    </div>
+                    <!--Form section for entering zipcode.-->
+                    <div class="form-group">
+                        <label for="txtZipCode" class="form-label">Zip Code</label>
+                        <input id="txtZipCode"  placeholder="Zip Code" aria-label="Zip Code" class="form-control">
+                    </div>
+                    <!--Form section for entering the phone number.-->
+                    <div class="form-group">
+                        <label for="txtPhoneNumber" class="form-label">Phone Number</label>
+                        <input id="txtPhoneNumber"  placeholder="Phone Number" aria-label="Phone Number" class="form-control" type="tel" maxLength="18">
+                    </div>
+                    <!--Form section for entering Registration ID.-->
+                    <div class="form-group">
+                        <label for="txtRegistrationID" class="form-label">Coop Registration ID</label>
+                        <input id="txtRegistrationID" placeholder="Registration ID"  aria-label="Registration ID" class="form-control">
+                    </div>
+                    <!--Button to register with entered information 
+                        (will be validated in the JavaScript section.)-->
+                    <button class="col-12 btn btn-success mt-4" id="btnRegister" type="button">Register</button>
+                    <div class="col-12 d-flex justify-content-center">
+                        <!--Anchor element to cancel registration and switch to login page.-->
+                        <a class="col-12 text-center btnToggle" data-card="Register">Cancel Registration and Return To Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Post_login dashboard creation/placeholder -->
+        <div class="card col-12 col-md-10 col-lg-9" id="divDashboard" style="display:none;">
+            <div class="card-header">
+                <h3>Dashboard</h3>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Necessary scripts for jquery, bootstrap, and sweetalert -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    var strCoopID;
+    
+    //Generates a new Coop ID when web page is loaded and pre-fills the Coop ID input on the registration page.
+    //This may need to be edited later on.
+    $.post('https://simplecoop.swollenhippo.com/coop.php', function(result) {
+        result = JSON.parse(result);
+        strCoopID = result.CoopID;
+        console.log(strCoopID);
+        $('#txtRegistrationID').val(strCoopID)
+    })
+    
+    /*$.ajax({
+        url: 'https://simplecoop.swollenhippo.com/coop.php',
+        type: 'PUT',
+        data: {SessionID:sessionStorage.getItem(SessionID),Street1:sessionStorage.getItem(Street1),Street2:sessionStorage.getItem(Street2),City:sessionStorage.getItem(City),State:sessionStorage.getItem(State),ZIP:sessionStorage.getItem(ZIP)}, //Is this right?
+        success: function(result) {
+            console.log(result);
+        }
+    })*/
+    
+    /*made a btn onclick but currently doesnt have a use as the btn doesnt currently exist
+    functions currently not finished
+    $('.btnNA').on('click',function(){
+        $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID')},function(result){
+            console.log(result);
+        })
+    })
+
+
+    */
+
+    //When a button is clicked with the class btnToggle the function gathers the information from the Login and registration text boxes
+    $('.btnToggle').on('click',function(){
+            //Checks the data of the card and sets it to strCard
+            let strCard = $(this).attr('data-card')
+            //If the data-card is login
+            if (strCard == 'Login'){
+            //Switches the state of the login and register page
+                $('#divLogin').slideToggle(function(){
+                    $('#divRegister').slideToggle();                
+                })
+            //Gets the text box values of the Login text boxes and removes the visual height class
+                $('#txtLoginEmail').val('');
+                $('#txtLoginPassword').val('');
+                $('#divMain').removeClass('vh-100')
+            } else {
+            //If the data-card is register, toggle the state of login and register page
+                $('#divRegister').slideToggle(function(){
+                    $('#divLogin').slideToggle();
+                })
+            //Gets the value of each text box for the registraion page and adds vh class
+                $('#txtFirstName').val('');
+                $('#txtLastName').val('');
+                $('#txtEmail').val('');
+                $('#txtPassword').val('');
+                //$('#txtRegistrationID').val('');
+                $('#txtStreetAddress1').val('');
+                $('#txtStreetAddress2').val('');
+                $('#txtCity').val('');
+                $('#txtState').val('');
+                $('#txtZipCode').val('');
+                $('#txtPhoneNumber').val('');
+                $('#divMain').addClass('vh-100');
+            }
+        })
+    
+
+    $('#navRegister').on('click',function(){
+        //When "Register" is clicked on the navigation bar, toggle from the login card to the registration card
+        //Note: we don't want the "Register" anchor to do anything if the user is already on the registration card
+        let strCard = $(this).attr('data-card')
+        if(strCard == 'Login') {
+            $('#divLogin').slideUp(function(){
+                $('#divRegister').slideDown();
+            })
+            /*Sets the value of each text box on the login card to an empty string and removes the class
+            that forces divMain to take up the entire viewport height */
+            $('#txtLoginEmail').val('');
+            $('#txtLoginPassword').val('');
+            $('#divMain').removeClass('vh-100')
+        } else if(strCard == 'Dashboard') {
+            $('#txtLoginEmail').val('');
+            $('#txtLoginPassword').val('');
+
+            $('#divDashboard').slideUp(function(){
+                $('#navRegister').attr('data-card', 'Login');
+                $('#navLogin').attr('data-card', 'Register');
+                $('#divRegister').slideDown();
+            })
+            $('#divMain').removeClass('vh-100')
+        }
+    })
+
+    $('#navLogin').on('click',function(){
+        //When "Login" is clicked on the navigation bar, toggle from the registration card to the login card
+        //Note: we don't want the "Login" anchor to do anything if the user is already on the login card
+        let strCard = $(this).attr('data-card')
+        if(strCard == 'Register'){
+            $('#divRegister').slideUp(function(){
+                $('#divLogin').slideDown();
+            })
+            /*Sets the value of each text box on the registraion card to an empty string and adds back the viewport 
+            height class (this is so the login card will be centered)  */
+            $('#txtFirstName').val('');
+            $('#txtLastName').val('');
+            $('#txtEmail').val('');
+            $('#txtPassword').val('');
+            //$('#txtRegistrationID').val(''); //Gonna comment this out for now until I find out if we need it here or not
+            $('#txtStreetAddress1').val('');
+            $('#txtStreetAddress2').val('');
+            $('#txtCity').val('');
+            $('#txtState').val('');
+            $('#txtZipCode').val('');
+            $('#txtPhoneNumber').val('');
+            $('#divMain').addClass('vh-100');
+        } else if(strCard == 'Dashboard') {
+            $('#txtFirstName').val('');
+            $('#txtLastName').val('');
+            $('#txtEmail').val('');
+            $('#txtPassword').val('');
+            //$('#txtRegistrationID').val('');
+            $('#txtStreetAddress1').val('');
+            $('#txtStreetAddress2').val('');
+            $('#txtCity').val('');
+            $('#txtState').val('');
+            $('#txtZipCode').val('');
+            $('#txtPhoneNumber').val('');
+
+            $('#divDashboard').slideUp(function(){
+                $('#navRegister').attr('data-card', 'Login');
+                $('#navLogin').attr('data-card', 'Register');
+                $('#divLogin').slideDown();
+            })
+            $('#divMain').addClass('vh-100');
+        }
+    })
+
+    //On click of the button register
+    $('#btnRegister').on('click', function(){
+    //Initializes btnError and strError message to flase and empty
+        let blnError = false;
+        let strErrorMessage = '';
+
+    //Sets scoped variable of str(Variable) to the the values in the text boxes in register
+        let strEmail = $('#txtEmail').val();
+        let strPassword = $('#txtPassword').val();
+        let strFirstName = $('#txtFirstName').val();
+        let strLastName = $('#txtLastName').val();
+        let strStreetAddress1 = $('#txtStreetAddress1').val();
+        let strStreetAddress2 = $('#txtStreetAddress2').val(); //Maybe change these lines later
+        let strStreetAddress = $('#txtStreetAddress1').val() + " " + $('#txtStreetAddress2').val()
+        //console.log(strStreetAddress) //May not need this right now
+        let strCity = $('#txtCity').val();
+        let strState = $('#txtState').val();
+        let strZipCode = $('#txtZipCode').val();
+        let strPhoneNumber = $('#txtPhoneNumber').val();
+        /*Not sure if this is supposed to be the same thing as the coop ID;
+          will try to look into this later. */
+        let strRegistrationID = $('#txtRegistrationID').val();
+    
+        //Checks if the email follows the selected format
+        if(!strEmail.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) { 
+            /*Source for Regular Expression:
+              https://emaillistvalidation.com/blog/email-validation-in-javascript-using-regular-expressions-the-ultimate-guide/ (Greens)*/
+            blnError = true;
+            strErrorMessage += '<p>Email must be valid. </p>';
+        }
+        
+        //Ensures that the first name txt box is blank
+        if (strFirstName.length < 1){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>First Name cannot be blank.</p>';
+        }
+        //Password must be 6 or more characters
+        if (strPassword.length < 6){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Password has to be 6 or more characters.</p>';
+        }
+        //Ensures that the last name txt box is blank
+        if (strLastName.length < 1){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Last Name cannot be blank. </p>';
+        }
+        //Ensures that the streetAddress1 txt box is blank
+        if (strStreetAddress.length < 2){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Street address 1 cannot be blank. </p>';
+        }
+        if (strCity.length < 1) {
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>City cannot be blank. </p>';
+        }
+        if (strState.length < 1) {
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>City cannot be blank. </p>';
+        } else if (strState.length < 2) {
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Invalid state name. </p>';
+        }
+        if (strZipCode.length < 1) {
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Zip Code cannot be blank. </p>';
+        } else if (strZipCode.length < 5) {
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Invalid Zip Code. </p>';
+        }
+        //Ensures phone number is fully filled out and follows appropriate formula
+        if (strPhoneNumber.length != 18){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Mobile Number cannot be blank. </p>';
+        }
+        //Checks if registration ID is 3870
+        /*if (strRegistrationID != 3870){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>The registartion ID is incorrect. </p>';
+        }*/ //COMMENTED OUT FOR NOW; may have to be uncommented later
+        //Dispalys sweet alert if any of the conditional error statements were triggered as error
+        // This if else block checks to see if there is an error then pops up
+        // with an appropriate sweet alert message
+        if(blnError == true){
+                console.log(strErrorMessage);
+                Swal.fire({
+                    title: "Oops",
+                    html: strErrorMessage,
+                    icon: "error"
+                });
+            } else {
+            //Displays success if there are no errors in the input validation
+                Swal.fire({
+                    title: "Successful Registered",
+                    text: 'You have successfully logged in!',
+                    icon: "success"
+                });
+            //If success, slide register up and slide up dashboard
+                $('#divRegister').slideUp(function(){
+                    $('#divDashboard').slideDown();
+                    $('#navLogin').attr('data-card', 'Dashboard');
+                    $('#navRegister').attr('data-card', 'Dashboard');
+                })
+                console.log('No errors found');
+                //Create new user
+                //Should this behave differently if someone tries to create an account that already exists?
+                $.post('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strRegistrationID}, function(result) {
+                    result = JSON.parse(result);
+                    console.log(result.Outcome);
+                })
+                //New session and update/retrieve coop details (may need to add method to delete sesssion as well)
+                $.post('https://simplecoop.swollenhippo.com/sessions.php', {Email:strEmail,Password:strPassword}, function(result){
+                    //The names of the JSON values passed may need to be changed
+                    //Should I change names of callback function parameters?
+                    result = JSON.parse(result)
+                    console.log(result);
+                    sessionStorage.setItem('SessionID', result.SessionID);
+                    console.log(sessionStorage.getItem('SessionID'));
+                    $.ajax({
+                        url: 'https://simplecoop.swollenhippo.com/coop.php',
+                        type: 'PUT',
+                        data: {SessionID:sessionStorage.getItem('SessionID'),Street1:strStreetAddress1,Street2:strStreetAddress2,City:strCity,State:strState,ZIP:strZipCode}, //Is this right?
+                        //Should I change name of the callback function parameter?
+                        success: function(coopUpdate) {
+                            coopUpdate = JSON.parse(coopUpdate)
+                            console.log(coopUpdate.Outcome);
+                            //This method may need to be put elsewhere instead of here
+                            $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
+                                coopResults.forEach(function(strCoopDetail) {
+                                    console.log(strCoopDetail);
+                                })
+                            })
+                        }
+                    })
+                })
+            }
+    })
+    //Click event for the Login Button
+    $('#btnLogin').on('click',function(){
+        //Creates variables to hold the user's email and password
+        let strLoginEmail = $('#txtLoginEmail').val();
+        let strLoginPassword = $('#txtLoginPassword').val();
+        //Initializes a boolean variable to check if the login credentials are valid
+        let blnError = false;
+
+        
+        
+        //Initializes an empty string variable to append the error message to
+        let strErrorMessage = '';
+        console.log(strLoginEmail);
+        console.log(strLoginPassword)
+
+        //Checks if strLoginEmail exists
+        if(strLoginEmail.length < 1) {
+            blnError = true;
+            strErrorMessage += '<p>Email cannot be blank.</p>';
+        //Ensures email matches specified format with the selected characters
+        } else if(!strLoginEmail.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)){ //Source for Regular Expression: https://emaillistvalidation.com/blog/email-validation-in-javascript-using-regular-expressions-the-ultimate-guide/ (Greens)
+            blnError = true;
+            strErrorMessage += '<p>Invalid Email.</p>';
+        }
+        //Password must be 6 or more characters
+        if (strLoginPassword.length < 6) { 
+            blnError = true;
+            strErrorMessage += '<p>Password must be at least 6 characters.</p>';
+        }
+        //Sends a sweet alter of error if blnError is true    
+        if(blnError == true){
+            Swal.fire({
+                title: 'Oops',
+                html: strErrorMessage,
+                icon: 'error'
+            });
+        } else{
+            //If verification passes, slide down login page and slide up dashboard page
+            $('#divLogin').slideUp(function(){
+                $('#divMain').removeClass('vh-100');
+                $('#divDashboard').slideDown();
+                $('#navLogin').attr('data-card', 'Dashboard');
+                $('#navRegister').attr('data-card', 'Dashboard');
+            })
+        }
+    })
+                
+//On a key click, set var phoneNumber to the Phone Number text box and sent the value to the phoneFormat function
+document.getElementById('txtPhoneNumber').addEventListener('keyup',function(evt){
+    var phoneNumber = document.getElementById('txtPhoneNumber');
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    phoneNumber.value = phoneFormat(phoneNumber.value);
+});
+
+// We need to manually format the phone number on page load
+document.getElementById('txtPhoneNumber').value = phoneFormat(document.getElementById('txtPhoneNumber').value);
+
+// A function to determine if the pressed key is an integer
+function numberPressed(evt){
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if(charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)){
+                return false;
+        }
+        return true;
+}
+
+// A function to format text to look like a phone number
+function phoneFormat(input){
+        // Strip all characters from the input except digits
+        input = input.replace(/\D/g,'');
+        
+        // Trim the remaining input to ten characters, to preserve phone number format
+        input = input.substring(0,10);
+
+        // Based upon the length of the string, we add formatting as necessary
+        var size = input.length;
+        if(size == 0){
+                input = input;
+        }else if(size < 4){
+                input = '('+input;
+        }else if(size < 7){
+                input = '('+input.substring(0,3)+') - '+input.substring(3,6);
+        }else{
+                input = '('+input.substring(0,3)+') - '+input.substring(3,6)+' - '+input.substring(6,10);
+        }
+        return input; 
+}
+</script>
+</body>
+</html>

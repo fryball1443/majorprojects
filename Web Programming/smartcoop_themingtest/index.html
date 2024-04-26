@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleTime</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body class="bg-dark">
+    <div class="d-flex col-12 justify-content-center align-items-center vh-100">
+        <div class="card col-12 col-md-5 col-lg-4" id="divLogin">
+            <div class="card-header">
+                <h3>Login</h3>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group mt-4">
+                        <label for="txtLoginEmail" class="form-label">Email</label>
+                        <input id="txtLoginEmail" class="form-control" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtLoginPassword" class="form-label">Password</label>
+                        <input id="txtLoginPassword" class="form-control" type="password">
+                    </div>
+                    <button class="col-12 btn btn-success mt-4" id="btnLogin" type="button">Login</button>
+                    <div class="col-12 d-flex justify-content-center">
+                        <a class="col-12 text-center btnToggle" data-card="Login">Need an Account?  Click Here</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="card col-12 col-md-5 col-lg-4" id="divRegister" style="display:none;">
+            <div class="card-header">
+                <h3>Registration</h3>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtFirstName" class="form-label">First Name</label>
+                        <input id="txtFirstName" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="txtLastName" class="form-label">Last Name</label>
+                        <input id="txtLastName" class="form-control">
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="txtEmail" class="form-label">Email</label>
+                        <input id="txtEmail" class="form-control" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPassword" class="form-label">Password</label>
+                        <input id="txtPassword" class="form-control" type="password">
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="txtOrgID" class="form-label">Organizational ID</label>
+                        <input id="txtOrgID" class="form-control">
+                    </div>
+                    <button class="col-12 btn btn-success mt-4" id="btnRegister" type="button">Register</button>
+                    <div class="col-12 d-flex justify-content-center">
+                        <a class="col-12 text-center btnToggle" data-card="Register">Return To Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card col-12 col-md-10 col-lg-9" id="divDashboard" style="display:none;">
+            <div class="card-header">
+                <h3>Dashboard</h3>
+            </div>
+            <div class="card-body">
+                This is a dashboard
+                <button class="btn btn-danger col-12" type="button" id="btnLogout">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $.getJSON('https://www.thesimplehomestead.com/simpletime/sessions.php',
+        {SessionID:sessionStorage.getItem('SimpleSession')},
+        function(sessionDetails){
+            if(sessionDetails.Email){
+                $('#divLogin').slideUp(function(){
+                    $('#divDashboard').slideDown();
+                })
+            }
+        })
+
+        $('#btnLogout').on('click',function(){
+            $.ajax({
+                url: 'https://www.thesimplehomestead.com/simpletime/sessions.php',
+                type: 'DELETE',
+                data: {SessionID:sessionStorage.getItem('SimpleSession')},
+                success: function(result) {
+                    sessionStorage.removeItem('SimpleSession');
+                    $('#divDashboard').slideUp(function(){
+                        $('#divLogin').slideDown();
+                    })
+                }
+            });
+        })
+        $('.btnToggle').on('click',function(){
+            let strCard = $(this).attr('data-card');
+            if(strCard == 'Login'){
+                $('#divLogin').slideToggle(function(){
+                    $('#divRegister').slideToggle();
+                })
+            } else {
+                $('#divRegister').slideToggle(function(){
+                    $('#divLogin').slideToggle();
+                })
+            }
+        })
+
+        $('#btnLogin').on('click', function(){
+            let strEmail = $('#txtLoginEmail').val();
+            let strPassword = $('#txtLoginPassword').val();
+
+            if(strEmail.length < 1 || strPassword.length < 1){
+                Swal.fire({
+                    title: "Oops!",
+                    html: '<p>Email and Password cannot be blank</p>',
+                    icon: "error"
+                })
+            } else{
+                $.post('https://www.thesimplehomestead.com/simpletime/sessions.php',{Email:strEmail,Password:strPassword},function(results){
+                    results = JSON.parse(results);
+                    console.log(results);
+                    sessionStorage.setItem('SimpleSession',results.SessionID)
+                })
+            }
+
+        })
+
+        $('#btnRegister').on('click',function(){
+            let blnError = false;
+            let strError = '';
+
+            let strFirstName = $('#txtFirstName').val();
+            let strLastName = $('#txtLastName').val();
+            let strEmail = $('#txtEmail').val();
+            let strPassword = $('#txtPassword').val();
+            let strOrgID = $('#txtOrgID').val();
+
+            if(strFirstName.length <1){
+                blnError = true;
+                strError += '<p>First name cannot be blank.</p>'
+            }
+            if(strLastName.length <1){
+                blnError = true;
+                strError += '<p>Last name cannot be blank.</p>'
+            }
+            if(strEmail.length <7){
+                blnError = true;
+                strError += '<p>Email must be valid.</p>'
+            } else if (!strEmail.includes('@')){
+                blnError = true;
+                strError += '<p>Email must be valid.</p>'
+            } else if(!strEmail.includes('.')){
+                blnError = true;
+                strError += '<p>Email must be valid.</p>'
+            }
+            if(strPassword.length <6){
+                blnError = true;
+                strError += '<p>Password must be at least 6 characters long.</p>'
+            }
+            if(strOrgID.length != 4){
+                blnError = true;
+                strError += '<p>Invalid OrgID.</p>'
+            }
+
+            if(blnError == true){
+                Swal.fire({
+                    title: "Oops!",
+                    html: strError,
+                    icon: "error"
+                });
+            } else {
+                $.post('https://www.thesimplehomestead.com/simpletime/users.php',{Email:strEmail,FirstName:strFirstName,LastName:strLastName,OrgNumber:strOrgID,Password:strPassword},function(result){
+                    result = JSON.parse(result);
+                    console.log(result);
+                    if(result.Error){
+                        Swal.fire({
+                            title: "Oops!",
+                            html: '<p>' + result.Error + '</p>',
+                            icon: "error"
+                        });
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentData | HR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://swollenhippo.com/flatly.min.css" rel="stylesheet">
+
+</head>
+<body style="background-image: url(https://swollenhippo.com/background.jpg); background-attachment: fixed;">
+    <div class="col-12 d-flex vh-100 justify-content-center align-items-center" id="divRegisterContainer">
+        <div class="card col-12 col-md-5 col-lg-4" id="divRegister">
+            <div class="card-body">
+                <h2 class="col-12 text-center mb-5">Register Device</h2>
+                <input id="txtEmail" placeholder="Email" aria-label="Email" type="email" class="form-control" required>
+                <input id="txtAPIKey" placeholder="Password" aria-label="Password" type="password" class=" mt-2 form-control" required>
+                <button class="btn btn-primary mt-4 col-12" type="button" id="btnRegister">Register Device</button>
+                <button class="btn btn-secondary mt-1 col-12" type="button" id="btnCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-3 mb-3" id="divDashboard" style="display: none;">
+        <div class=" row col-12">
+            <h2 class="col-12 text-center mb-5">Employee Profile</h2>
+            <div class="col-12 col-md-5 col-lg-4 card" id="divProfile">
+                <div class="card-body">
+                    <div class="row col-12">
+                        <img src="" id="imgProfile" alt="" class="rounded-circle col-5" style="max-height: 200px;">
+                        <div class="col-7">
+                            <h3 class="text-primary" id="lblName"></h3>
+                            <p class="mt-2">Codename: <span id="lblCodeName"></span></p>
+                            <p class="mt-2">Billing Agency: <span id="lblBillingAgency"></span></p>
+                            <p class="mt-2">Postion: <span id="lblPosition"></span></p>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary col-12" id="btnToggle" type="button">Toggle Contact Details</button>
+                </div>
+            </div>
+            <div class="col-12 col-md-7 col-lg-8 card" id="divPayroll">
+                <div class="card-body">
+                    <table class="table table-striped" id="tblPayroll">
+                        <thead>
+                            <tr><th>Month</th><th>Year</th><th>Sales</th><th>Hours Worked</th><th>Hourly Rate</th><th>Commission Rate</th></tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Make sure you include reference to DataTables.net CDN  (3pts)-->
+    <script>
+        // Begin common regular expression patterns
+        const regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+        // End common regular expression patterns
+
+        // Begin global variables
+        var strDetailsURL = 'https://www.swollenhippo.com/getProfileDatailsByAPIKey.php';
+        var strPayRollURL = 'https://www.swollenhippo.com/getPayStubsByAPIKey.php';
+        var strRegisterationURL = 'https://www.swollenhippo.com/registerDevice.php';
+        // End global variables
+
+        // Begin handler for when document is ready
+        $(document).ready(function(){
+            // check if the sessionStorage contains
+            // a value for APIKey
+            // if a value exists, delete it from sessionStorage (3pts)
+            if(sessionStorage.getItem('APIKey')) {
+                sessionStorage.removeItem('APIKey');
+            }
+        })
+        // End handler for when document is ready
+
+        // Begin handler for click of Register Button
+        $('#btnRegister').on('click',function(){
+            // Perform validation of Email and Password
+            // using the regular expressions regEmail and regPassword
+            // HINT:  regEmail.test and regPassword.test (10pts)
+            var regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            var regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+            var email = $('#txtEmail').val();
+            var password = $('#txtAPIKey').val();
+
+            // If the validation fails, show a sweetalert that
+            // indicates what failed to the enduser (3pts)
+            if (!regEmail.test(email) || !regPassword.test(password)) {
+                Swal.fire('Validation Error', 'Email or Password is invalid', 'error');
+            } else {
+                $.ajax({
+                    url: strRegisterationURL,
+                    method: 'POST',
+                    data: {
+                        Email: email,
+                        Password: password
+                    },
+                    success: function(response) {
+                        if (response.type === 'success') {
+                            sessionStorage.setItem('APIKey', response.message);
+                            funFillDashboard();
+                            $('#divRegisterContainer').hide();
+                            $('#divDashboard').show();
+                        } else {
+                            Swal.fire('Registration Failed', response.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Registration Failed', 'Device Not Registered - Check Values', 'error');
+                    }
+                });
+            }
+
+            // If the validation passes
+            // call the strRegistrationURL to CREATE
+            // a new device registration
+            // the web service requires two parameters - Email,Password
+            // (5pts)
+            
+
+
+            // example returns from registrationURL:
+            // successful registration:
+            // {"type":"success","message":"DuffManSays,Phrasing!"}
+
+            // error
+            // {"type":"error","message":"Device Not Registered - Check Values"}
+            // {"type":"error","message":"Device Not Registered - Check HTTP Verb"}
+
+
+
+            // if the return is a success, save the value of the message key to the sessionStorage with a key of 'APIKey' (3pts)
+            // and call the funFillDashboard function (3pts)
+            // and animate the divRegisterContainer and divDashboard to hide one and show the other (3pts)
+
+            // if the return is an error, show a sweet alert indicating registration failed (3pts)
+        })
+        // End handler for click of Register Button
+
+        function funFillDashboard(){
+            
+            // using the strDetailsURL READ the information about the agent
+            // NOTE:  the webservice requires one parameter, APIKey.  The APIKey
+            // should be retrieved from sessionStorage (10pts)
+
+            $.ajax({
+                url: strDetailsURL,
+                method: 'GET',
+                data: {
+                    APIKey: sessionStorage.getItem('APIKey')
+                },
+                success: function(response) {
+                    // Update profile elements with the returned data
+                    $('#lblName').text(response.FirstName + ' ' + response.LastName);
+                    $('#lblCodeName').text(response.CodeName);
+                    $('#lblBillingAgency').text(response.Agency);
+                    $('#lblPosition').text(response.Job);
+                    $('#imgProfile').attr('src', response.Image);
+                },
+                error: function(response) {
+                    Swal.fire('Error', response.Outcome, 'error');
+                }
+            });
+
+            // using the strPayRollURL READ the information about the agents payroll
+            // NOTE:  the webservice requires one parameter, APIKey.  The APIKey
+            // should be retrieved from sessionStorage (10pts)
+
+            $.ajax({
+                url: strPayRollURL,
+                method: 'GET',
+                data: {
+                    APIKey: sessionStorage.getItem('APIKey')
+                },
+                success: function(response) {
+                    // Clear existing table data
+                    $('#tblPayroll').empty();
+
+                    // Iterate over the returned results and add them to the table
+                    for (var i = 0; i < response.length; i++) {
+                        var row = '<tr>';
+                        row += '<td>' + response[i].Month + '</td>';
+                        row += '<td>' + response[i].Year + '</td>';
+                        row += '<td>' + response[i].Sales + '</td>';
+                        row += '<td>' + response[i].Hours + '</td>';
+                        row += '<td>' + response[i].Rate + '</td>';
+                        row += '<td>' + response[i].CommissionRate + '</td>';
+                        row += '</tr>';
+                        $('#tblPayroll').append(row);
+                    }
+
+                    // Create a datatable from the table
+                    $('#tblPayroll').DataTable();
+                },
+                error: function(response) {
+                    Swal.fire('Error', response.Outcome, 'error');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
